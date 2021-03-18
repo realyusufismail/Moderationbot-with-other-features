@@ -4,8 +4,9 @@ const client = new discord.Client();
 const PREFIX = process.env.PREFIX;
 client.login(process.env.BOT_TOKEN);
 // Set the bot's "Playing: " status (must be in an event!)
+
 client.on("ready", () => {
-   client.user.setActivity("Helping people who are typing &help and responding to commands")
+  client.user.setActivity("Helping people who are typing &help and responding to commands. In beta stages.")
 })
 
 
@@ -22,10 +23,15 @@ if(message.author.bot)return;
 if(isValidCommand(message, "hello"))
     message.reply("hello"); 
  if (isValidCommand(message,"help"))
-    message.reply("To kick type &kick. To unban type &unban. To ban a user type &ban. To roll dice type &rolldice. To add a role type &add role name. To remove role type &del role name. You can do more than one in the same time apllies to adding and removing roles. To embed a message type &embed. &say to post announcment. only in the bot owner server. More commands comming soon");
-if (isValidCommand(message, "rolldice"))
+    message.reply("To join the owners do &server. To kick type &kick. To unban type &unban. To ban a user type &ban. To roll dice type &rolldice. To add a role type &add role name. To remove role type &del role name. You can do more than one in the same time apllies to adding and removing roles. To embed a message type &embed. &say to post announcment. only in the bot owner server. to check if the bot is working do &test. To see how many invites someone has do &number-of-invites. More commands comming soon");
+if (isValidCommand(message, "del"))
     message.reply("rolled a " + rollDice());
-   
+if (isValidCommand(message, "test"))
+  message.reply("Test 123 Bot is working");
+  if (isValidCommand(message, "server"))
+   message.reply(" https://discord.gg/g858J6q");
+
+
 else if(isValidCommand(message, "add")){
    let args = message.content.toLowerCase().substring(5);
    let roleNames = args.split(", ");
@@ -65,9 +71,28 @@ else if(isValidCommand(message, "add")){
    });
    
 } 
+else if(isValidCommand(message, "number-of-invites")){
+  var user = message.author;
+
+  message.guild.fetchInvites()
+  .then
+
+  (invites =>
+      {
+          const userInvites = invites.array().filter(o => o.inviter.id === user.id);
+          var userInviteCount = 0;
+          for(var i=0; i < userInvites.length; i++)
+          {
+              var invite = userInvites[i];
+              userInviteCount += invite['uses'];
+          }
+               message.reply(`You have ${userInviteCount} invites.`);
+      }
+  )
+}
 else if(isValidCommand(message, "del")){
    let args = message.content.toLowerCase().substring(5);
-   let roleNames = args.split(", ");
+   let roleNames = args.split(",");
    let roleSet = new Set(roleNames);
  let { cache } = message.guild.roles;
  roleSet.forEach(roleName => {
@@ -237,26 +262,9 @@ else if(isValidCommand(message,"unmute")){
        message.channel.send("Member does not exist");
 
     }
-  }
-  
-  else if(isValidCommand(message,"Invitelink")){
-     f(message.member.hasPermission(['CREATE_INSTANT_INVITE'])){
-    message.channel.send("You dont have permission to unmute people!");
-  }
-     let invite = await message.channel.createInvite(
-  {
-    maxAge: 10 * 60 * 1000, // maximum time for the invite, in milliseconds
-    maxUses: 1 // maximum times it can be used
-  },
-  `Requested with command by ${message.author.tag}`
-)
-.catch(console.log);
-
-  message.reply(invite ? `Here's your invite: ${invite}` : "There has been an error during the creation of the invite.");
 }
 }
 });
- 
     
 //npm install -g nodemon
 //nodemon bot.js
