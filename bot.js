@@ -1,270 +1,188 @@
-require('dotenv').config();
-const discord = require('discord.js');
-const client = new discord.Client();
-const PREFIX = process.env.PREFIX;
-client.login(process.env.BOT_TOKEN);
-// Set the bot's "Playing: " status (must be in an event!)
+const Discord = require("discord.js");
+const config = require("./config.json");
+
+const client = new Discord.Client();
 
 client.on("ready", () => {
-  client.user.setActivity("Helping people who are typing &help and responding to commands. In beta stages.")
-})
+    client.user.setActivity("Replying to people who type &help")
+    client.user.setPresence({
+        status: "online",  // You can show online, idle... Do not disturb is dnd
+      })
+  })
 
+  
 
-client.on('ready',() =>{
- console.log(`${client.user.tag} has logged in.`);
-
-});
-const isValidCommand = (message, cmdName) => message.content.toLowerCase().startsWith(PREFIX + cmdName);
-const rollDice  = () => Math.floor(Math.random() * 6) + 1;
-const checkPermissionRole = (role) => role.permissions.has('ADMINISTRATOR') || role.permissions.has('KICK_MEMBERS') || 
-role.permissions.has('BAN_MEMBERS') || role.permissions.has("MANAGE_GUILD")|| role.permissions.has('MANAGE_CHANNELS');
-client.on('message', async function(message) {
-if(message.author.bot)return;
-if(isValidCommand(message, "hello"))
-    message.reply("hello"); 
- if (isValidCommand(message,"help"))
-    message.reply("To join the owners do &server. To kick type &kick. To unban type &unban. To ban a user type &ban. To roll dice type &rolldice. To add a role type &add role name. To remove role type &del role name. You can do more than one in the same time apllies to adding and removing roles. To embed a message type &embed. &say to post announcment. only in the bot owner server. to check if the bot is working do &test. To see how many invites someone has do &number-of-invites. More commands comming soon");
-if (isValidCommand(message, "del"))
-    message.reply("rolled a " + rollDice());
-if (isValidCommand(message, "test"))
-  message.reply("Test 123 Bot is working");
-  if (isValidCommand(message, "server"))
-   message.reply(" https://discord.gg/g858J6q");
-
-
-else if(isValidCommand(message, "add")){
-   let args = message.content.toLowerCase().substring(5);
-   let roleNames = args.split(", ");
-   let roleSet = new Set(roleNames);
- let { cache } = message.guild.roles;
-
-   roleSet.forEach(roleName => {
-    let role = cache.find(role => role.name.toLowerCase() === roleName);
-    if(role){
-  if (message.member.roles.cache.has(role.id)){
-   message.channel.send("You already have this role!");
-   return;   
-  }
- 
-  if(checkPermissionRole(role))   {
-  message.channel.send("You cannot add yourself to this role.");
- 
-  }
-  else{
- 
-     message.member.roles.add(role)
-        .then(member => message.channel.send("You were added to this role!"))
-        .catch(err => {
-         console.log(err)
-         message.channel.send("Something went wrong...");
- 
-        });
-  }
- 
-    }
-    else {
-      message.channel.send("Role not found!");
- 
-    }
- 
-    
-   });
-   
-} 
-else if(isValidCommand(message, "number-of-invites")){
-  var user = message.author;
-
-  message.guild.fetchInvites()
-  .then
-
-  (invites =>
-      {
-          const userInvites = invites.array().filter(o => o.inviter.id === user.id);
-          var userInviteCount = 0;
-          for(var i=0; i < userInvites.length; i++)
-          {
-              var invite = userInvites[i];
-              userInviteCount += invite['uses'];
-          }
-               message.reply(`You have ${userInviteCount} invites.`);
-      }
-  )
-}
-else if(isValidCommand(message, "del")){
-   let args = message.content.toLowerCase().substring(5);
-   let roleNames = args.split(",");
-   let roleSet = new Set(roleNames);
- let { cache } = message.guild.roles;
- roleSet.forEach(roleName => {
-   let role = cache.find(role => role.name.toLowerCase() === roleName);
-   if(role){
- if (message.member.roles.cache.has(role.id)){
-   message.member.roles.remove(role)
-   .then(member => message.channel.send("You were romoved from this role!"))
-   .catch(err => {
-    console.log(err)
-    message.channel.send("Something went wrong...");
-
-   });
-  return;   
- }
-
-   }
-   else {
-     message.channel.send("Role not found!");
-
-   }
-
-   
+  
+  
+  client.on('ready',() =>{
+   console.log(`${client.user.tag} has logged in.`);
+  
   });
-  
-   
-}
-else if(isValidCommand(message, "embed")){
-  let embedContent = message.content.substring( 7);
-  let embed = new discord.MessageEmbed();
-  embed.setDescription(embedContent);
-  embed.setColor('#00e5ff');
-  embed.setTitle("New Embed Message Created");
-  embed.setTimestamp();
-  embed.setAuthor(message.author.tag);
-  embed.setThumbnail(message.author.displayAvatarURL()); 
-  message.channel.send(embed);
- 
-}
-else if(isValidCommand(message, "say")){
-  let announcement = message.content.substring(5);
-  let announcementsChannel = client.channels.cache.get('715580429498974209');
-  if(announcementsChannel)
-announcementsChannel.send(announcement);
+
+const prefix = "&";
+
+client.on("message", function(message) {
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return;
 
   
-  
-}
-else if(isValidCommand(message, "ban")){
-  if(!message.member.hasPermission('BAN_MEMBERS')){
-    message.channel.send("You dont have permission to ban people!");
 
+  const commandBody = message.content.slice(prefix.length);
+  const args = commandBody.split(' ');
+  const command = args.shift().toLowerCase();
+
+  
+  if (command === "ping") {
+    const timeTaken = Date.now() - message.createdTimestamp;
+    message.reply(`Pong! This message had a latency of ${timeTaken}ms.`);
   }
-else {
-  let memberId = message.content.substring(message.content.indexOf(' ') + 1);
-try {
-  let bannnedMember = await message.guild.members.ban(memberId);
-  if(bannnedMember)
-  message.channel.send(bannnedMember.tag + " was banned.");
 
-}
-catch(err){
-  console.log(err);
-}
-} 
-
-
-
-}
-else if(isValidCommand(message, "unban")){
-  if(!message.member.hasPermission('BAN_MEMBERS')){
-    message.channel.send("You dont have permission to ban people!");
-
+  else if (command === "sum") {
+    const numArgs = args.map(x => parseFloat(x));
+    const sum = numArgs.reduce((counter, x) => counter += x);
+    message.reply(`The sum of all the arguments you provided is ${sum}!`);
   }
-else {
-  let memberId = message.content.substring(message.content.indexOf(' ') + 1);
-try {
-  let unbannnedMember = await message.guild.members.unban(memberId);
-  if(unbannnedMember)
-  message.channel.send(unbannnedMember.tag + " was unbanned.");
+  
+  if (command === "kick") {
+    if (!message.member.hasPermission('KICK_MEMBERS'))
+        return message.channel.send("Insufficient permissions (Requires permission `Kick members`)").then(msg => {
+    msg.delete({ timeout: 30000 })
+})
+    const member = message.mentions.members.first();
+    if (!member)
+        return message.channel.send("You have not mentioned a user").then(msg => {
+    msg.delete({ timeout: 30000 })
+})
+    if (!member.kickable)
+        return message.channel.send("This user is unkickable").then(msg => {
+    msg.delete({ timeout: 30000 })
+})
+    const reason = args.slice(1).join(" ")
+    if (member) {
+        if (!reason) return member.kick().then(member => {
+            message.channel.send(`${member.user.tag} was kicked, no reason was provided`);
+        })
 
+        if (reason) return member.kick().then(member => {
+            message.channel.send(`${member.user.tag} was kicked for ${reason}`);
+        })
+    }
 }
-catch(err){
-  console.log(err);
-}
-} 
 
+if (command === "ban") {
+    if (!message.member.hasPermission('BAN_MEMBERS'))
+        return message.channel.send("Insufficient permissions (Requires permission `Ban members`)").then(msg => {
+    msg.delete({ timeout: 30000 })
+})
+    const member = message.mentions.members.first();
+    if (!member)
+        return message.channel.send("You have not mentioned a user").then(msg => {
+    msg.delete({ timeout: 30000 })
+})
+    if (!member.bannable)
+        return message.channel.send("This user is unbannable").then(msg => {
+    msg.delete({ timeout: 30000 })
+})
+    const reason = args.slice(1).join(" ")
+    if (member) {
+        if (!reason) return member.ban().then(member => {
+            message.channel.send(`${member.user.tag} was banned, no reason was provided`);
+        })
 
-
+        if (reason) return member.ban(reason).then(member => {
+            message.channel.send(`${member.user.tag} was banned for ${reason}`);
+        })
+    }
 }
-else if(isValidCommand(message, "kick")){
-  if(!message.member.hasPermission('KICK_MEMBERS')){
-    message.channel.send("You dont have permission to ban people!");
-}
-else {
-  let memberId = message.content.substring(message.content.indexOf(' ') + 1);
-  let member = message.guild.members.cache.get(memberId);
-  if(member){
-    try {
-    await member.kick();
-      message.channel.send("The member was kicked.");
+if (command === "say") {
+    const text = args.join(" ")
+    if(!text) return message.channel.send("You have not specified something to say").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+    message.channel.send(text)
     
     }
-    catch(err){
-      console.log(err);
+    if (command === "help") {
+        message.reply("Comming soon") ; 
     }
-  }
-
-} 
-}
-else if(isValidCommand(message, "mute")){
-  if(message.member.hasPermission(['KICK_MEMBERS','BAN_MEMBERS'])){
-    message.channel.send("You dont have permission to mute people!");
-  }
-  else {
-    let memberId = message.content.substring(message.content.indexOf(' ')+1);
-    let member = message.guild.members.cache.get(memberId);
-    if(member){
-      if(member.hasPermission(['KICK_MEMBERS'])&& !message.member.hasPermission('ADMINISTRATOR')){
-       message.channel.send("You dont have permission to mute this person. Nice try!! :laughing:")
-      }
-      else{
-        let mutedrole = message.guild.roles.cache.get('722004435764772904');
-        if (mutedrole){
-          member.roles.add(mutedrole);
-          message.send.channel("The user was muted")
-        }
-        else{
-        message.channel.send("Muted role not found.");
-
-        }
-       
-      }
+    
+    if (command === "add") {
+        if (!message.member.hasPermission('MANAGE_ROLES'))
+            return message.channel.send("Insufficient permissions (Requires permission `Manage roles`)").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        const member = message.mentions.members.first()
+        if (!member)
+            return message.channel.send("You have not mentioned a user").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        const add = args.slice(1).join(" ")
+        if (!add)
+            return message.channel.send("You have not specified a role").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        const roleAdd = message.guild.roles.cache.find(role => role.name === add)
+        if (!roleAdd)
+            return message.channel.send("This role does not exist").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        if (member.roles.cache.get(roleAdd.id))
+            return message.channel.send(`This user already has the ${add} role`).then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        member.roles.add(roleAdd.id).then((member) => {
+            message.channel.send(`${add} added to ${member.displayName}`)
+        })
     }
-    else{
-       message.channel.send("Member does not exist");
 
+    if (command === "remove") {
+        if (!message.member.hasPermission('MANAGE_ROLES'))
+            return message.channel.send("Insufficient permissions (Requires permission `Manage roles`)").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        const member = message.mentions.members.first()
+        if (!member)
+            return message.channel.send("You have not mentioned a user").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        const remove = args.slice(1).join(" ")
+        if (!remove)
+            return message.channel.send("You have not specified a role").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        const roleRemove = message.guild.roles.cache.find(role => role.name === remove)
+        if (!roleRemove)
+            return message.channel.send("This role does not exist").then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        if (!member.roles.cache.get(roleRemove.id))
+            return message.channel.send(`This user does not have the ${remove} role`).then(msg => {
+        msg.delete({ timeout: 30000 })
+    })
+        member.roles.remove(roleRemove.id).then((member) => {
+            message.channel.send(`${remove} removed from ${member.displayName}`)
+        })
     }
-  }
-  
-}
-else if(isValidCommand(message,"unmute")){
-  if(message.member.hasPermission(['KICK_MEMBERS'])){
-    message.channel.send("You dont have permission to unmute people!");
-  }
-  else {
-    let memberId = message.content.substring(message.content.indexOf(' ')+1);
-    let member = message.guild.members.cache.get(memberId);
-    if(member){
-      if(member.hasPermission(['KICK_MEMBERS','BAN_MEMBERS'])&& !message.member.hasPermission('ADMINISTRATOR')){
-       message.channel.send("You dont have permission to unmute this person. Nice try!! :laughing:")
-      }
-      else{
-        let mutedrole = message.guild.roles.cache.get('722004435764772904');
-        if (mutedrole){
-          member.roles.remove(mutedrole);
-          message.send.channel("The user was unmuted")
-        }
-        else{
-        message.channel.send("Muted role not found.");
+else {
+    message.reply("Command not found") ; 
+    }
 
-        }
-       
-      }
-    }
-    else{
-       message.channel.send("Member does not exist");
 
-    }
-}
-}
+
 });
-    
-//npm install -g nodemon
-//nodemon bot.js
+
+client.on('message', async message => {
+    antiSwearWords(client, message, {
+        warnMSG: `<@${message.author.id}> , why are you writing this?`, 
+        // warn message option || when not then = `<@${message.author.id}> dont use swear words.` 
+        // Behind the warnMSG will be an Warn Count
+        ignoreWord: ["ignoreThis", "andIgnoreThis", "alsoIgnoreThis"],
+        customWord: ["aCustomWord", "anOtherCustomWord"],
+        muteRole: "842342069494349865",  // ID of the Role
+        muteCount: 10,        // Number when the user get muted
+        kickCount: 20,        // Number when the user get kicked
+        banCount: 30,         // Number when the user get banned
+    });                       
+});
+
+client.login(config.BOT_TOKEN);

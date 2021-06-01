@@ -1,19 +1,27 @@
 {
-  "name": "yusufgamer",
+  "name": "Bot Name",
   "version": "1.0.0",
+  "description": "A moderation discord bot used for my discord server which is made by yusuf ismail",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node bot.js"
   },
-  "author": "Yusuf",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realyusufismail/Moderationbot-with-other-features.git"
+  },
+  "keywords": [
+    "Moderation"
+  ],
+  "author": "Yusuf Ismail",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/realyusufismail/Moderationbot-with-other-features/issues"
+  },
+  "homepage": "https://github.com/realyusufismail/Moderationbot-with-other-features#readme",
   "dependencies": {
-    "discord.js": "^12.2.0",
-    "dotenv": "^8.2.0",
-    "nodemon": "^2.0.4"
-  },
-  "devDependencies": {},
-  "keywords": [],
-  "description": ""
+    "anti-swear-words-packages-discord": "^1.1.43",
+    "discord.js": "^12.5.3",
+    "reaction-role": "^4.1.0"
+  }
 }
