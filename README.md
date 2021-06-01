@@ -1,5 +1,5 @@
 # Yusufgamer_Bot
-
+Note: I am recoding this bot which means this is outdated and i will upload the new version once finished.
 
 Bot files 
 
