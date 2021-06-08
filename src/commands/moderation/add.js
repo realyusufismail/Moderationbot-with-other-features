@@ -3,7 +3,7 @@ module.exports = {
     description: 'Give a user a role',
     guildOnly: true,
     execute(message, args) {
-        if (command === "add") {
+
             if (!message.member.hasPermission('MANAGE_ROLES'))
                 return message.channel.send("Insufficient permissions (Requires permission `Manage roles`)").then(msg => {
             msg.delete({ timeout: 30000 })
@@ -31,5 +31,4 @@ module.exports = {
                 message.channel.send(`${add} added to ${member.displayName}`)
             })
         }
-    },
-};
+    };
