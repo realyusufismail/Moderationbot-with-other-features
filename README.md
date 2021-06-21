@@ -3,7 +3,7 @@ This bot has been updated
 
 This is a moderation discord bot which uses javascript. It has command such as ban and kick. It can also add roles and remove roles and can do much more. This can also be used as template.
 
-I have not finished the help command yet. Will do by next week.
+Has all the latest commands currently.
 
 All commands can be found in src/commands. 
 
