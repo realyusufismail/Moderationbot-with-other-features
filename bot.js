@@ -1,4 +1,3 @@
-const { CommandoClient } = require('discord.js-commando');
 const fs = require('fs');
 const Discord = require("discord.js");
 const { Structures } = require('discord.js');

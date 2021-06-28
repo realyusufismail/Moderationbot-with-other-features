@@ -1,17 +1,12 @@
-const { Command } = require('discord.js-commando');
-
-module.exports = class JoinCommand extends Command {
-  constructor(client) {
-    super(client, {
+module.exports = {
       name: 'join',
       memberName: 'join',
-      aliases: ['summon'],
       guildOnly: true,
       clientPermissions: ['SPEAK', 'CONNECT'],
       description:
-        'Allows an Admin to summon the bot to your voice-channel when music is playing.'
-    });
-  }
+        'Allows an Admin to summon the bot to your voice-channel when music is playing.',
+    
+
 
   async run(message) {
     const voiceChannel = message.member.voice.channel;
@@ -37,4 +32,5 @@ module.exports = class JoinCommand extends Command {
       return;
     }
   }
+
 };

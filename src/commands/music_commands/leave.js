@@ -1,17 +1,12 @@
-const { Command } = require('discord.js-commando');
 
-module.exports = class LeaveCommand extends Command {
-  constructor(client) {
-    super(client, {
+module.exports = {
       name: 'leave',
-      aliases: ['end', 'stop'],
-      memberName: 'leave',
       guildOnly: true,
-      description: 'Leaves voice channel if in one!'
-    });
-  }
+      memberName: 'leave',
+      description: 'Leaves voice channel if in one!',
+  
 
-  run(message) {
+  execute(message, args) {
     var voiceChannel = message.member.voice.channel;
     if (!voiceChannel) {
       message.reply(':no_entry: Please join a voice channel and try again!');

@@ -1,12 +1,9 @@
-const { Command } = require('discord.js-commando');
 const db = require('quick.db');
 
-module.exports = class VolumeCommand extends Command {
-  constructor(client) {
-    super(client, {
+module.exports = {
+  
       name: 'volume',
       aliases: ['change-volume', 'v', 'vol'],
-      group: 'music',
       memberName: 'volume',
       description: 'Adjust song volume!',
       throttling: {
@@ -24,11 +21,9 @@ module.exports = class VolumeCommand extends Command {
             return wantedVolume >= 1 && wantedVolume <= 200;
           }
         }
-      ]
-    });
-  }
-
-  run(message, { wantedVolume }) {
+      ],
+  
+  async execute(message, args, { wantedVolume }) {
     const voiceChannel = message.member.voice.channel;
     if (!voiceChannel) {
       message.reply(':no_entry: Please join a voice channel and try again!');

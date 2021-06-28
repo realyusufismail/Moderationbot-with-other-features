@@ -1,17 +1,11 @@
-const { Command } = require('discord.js-commando');
 
-module.exports = class LoopCommand extends Command {
-  constructor(client) {
-    super(client, {
+module.exports = {
       name: 'loop',
-      aliases: [`repeat`],
-      memberName: 'loop',
+      memberName: 'join',
       guildOnly: true,
-      description: 'Loop the currently playing song!'
-    });
-  }
-
-  run(message) {
+      description: 'Loop the currently playing song!',
+  
+  execute(message, args) {
     if (!message.guild.musicData.isPlaying) {
       message.reply(':x: There is no song playing right now!');
       return;

@@ -1,12 +1,10 @@
-const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
 const Youtube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
 const { youtubeAPI } = require('../../../config.json');
 const youtube = new Youtube(youtubeAPI);
-module.exports = class PlayCommand extends Command{
-    constructor(client) {
-        super(client, {
+module.exports = {
+  
         name: 'play', 
         memberName: 'play', // this means the folder the file is inside
         description: 'Play any song or playlist from youtube',
@@ -20,11 +18,9 @@ module.exports = class PlayCommand extends Command{
             type: 'string',
             validate: query => query.length > 0 && query.length < 200 
         }
-    ]
-  });
-}
+    ],
 
-  async run(message, { query }) {
+async execute(message, args, { query }) {
     // Make sure that only users present in a voice channel can use 'play'
     if (!message.member.voice.channel) {
       message.reply(':no_entry: Please join a voice channel and try again!');
