@@ -1,4 +1,5 @@
 {
   "token": "Your Bot Toke",
-  "prefix":"&" 
+  "prefix":"&",
+  "youtubeAPI": "Youtube Api key goes here"
 }
