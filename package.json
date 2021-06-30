@@ -1,5 +1,5 @@
 {
-  "name": "yusufismail_discord_bot",
+  "name": "Moderationbot-with-other-features",
   "version": "1.0.0",
   "description": "A moderation discord bot used for my discord server which is made by yusuf ismail",
   "main": "bot.js",
@@ -8,17 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/realyusufismail/YusufIsmail_Discord_Bot.git"
+    "url": "git+https://github.com/realyusufismail/Moderationbot-with-other-features.git"
   },
   "keywords": [
     "Moderation"
   ],
-  "author": "Yusuf Ismail",
+  "author": "Yusuf Arfan Ismail",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/realyusufismail/YusufIsmail_Discord_Bot/issues"
+    "url": "https://github.com/realyusufismail/Moderationbot-with-other-features/issues"
   },
-  "homepage": "https://github.com/realyusufismail/YusufIsmail_Discord_Bot#readme",
+  "homepage": "https://github.com/realyusufismail/Moderationbot-with-other-features#readme",
   "dependencies": {
     "@discordjs/opus": "^0.5.3",
     "anti-swear-words-packages-discord": "^1.1.43",
