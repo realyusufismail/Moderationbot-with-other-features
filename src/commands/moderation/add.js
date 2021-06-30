@@ -2,7 +2,7 @@ module.exports = {
     name: 'add',
     description: 'Give a user a role',
     guildOnly: true,
-    execute(message, args) {
+    execute(client, message, args) {
 
             if (!message.member.hasPermission('MANAGE_ROLES'))
                 return message.channel.send("Insufficient permissions (Requires permission `Manage roles`)").then(msg => {

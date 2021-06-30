@@ -2,7 +2,7 @@ module.exports = {
     name: 'kick',
     description: 'Tag a member and kick them (but not really).',
     
-    execute(message) {
+    execute(client, message, args) {
         if (!message.member.hasPermission('KICK_MEMBERS'))
         return message.channel.send("Insufficient permissions (Requires permission `Kick members`)").then(msg => {
     msg.delete({ timeout: 30000 })

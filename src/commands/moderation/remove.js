@@ -2,7 +2,7 @@ module.exports = {
     name: 'remove',
     description: 'Removes the role from the user',
     guildOnly: true,
-    execute(message, args) {
+    execute(client, message, args) {
         if (!message.member.hasPermission('MANAGE_ROLES'))
         return message.channel.send("Insufficient permissions (Requires permission `Manage roles`)").then(msg => {
     msg.delete({ timeout: 30000 })

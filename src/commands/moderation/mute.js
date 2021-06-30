@@ -3,7 +3,8 @@ module.exports = {
     name: 'mute',
     description: 'Mute a person',
     guildOnly: true,
-    async  execute(client, message, args) {
+    async execute(client, message, args) {
+
     
       const mutedRole = message.guild.roles.cache.find(
         (role) => role.name === 'Muted'

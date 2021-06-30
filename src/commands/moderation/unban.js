@@ -2,7 +2,7 @@ module.exports = {
     name: 'unban',
     description: 'Unbans a person who is banned',
     guildOnly: true,
-    async execute(message, args) {
+    async execute(client, message, args) {
         if(!message.member.hasPermission('BAN_MEMBERS')){
             message.channel.send("You dont have permission to ban people!");
         

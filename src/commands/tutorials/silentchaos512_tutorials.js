@@ -1,7 +1,7 @@
 module.exports = {
-    name: 'silentchaos512_tutorials',
+    name: 'silentchaos512 tutorials',
     description: 'Youtube tutorial',
-    execute(message, args) {
+    execute(client, message, args) {
         message.channel.send("https://www.youtube.com/user/SilentChaos512") ; 
     },
 };

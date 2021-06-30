@@ -1,7 +1,7 @@
 module.exports = {
     name: 'website',
     description: 'Website',
-    execute(message, args) {
+    execute(client, message, args) {
         message.channel.send("https://realyusufismail.github.io") ; 
     },
 };

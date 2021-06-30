@@ -1,7 +1,7 @@
 module.exports = {
-    name: 'forge',
+    name: 'cy4shot server',
     description: 'Disocrd servers',
-    execute(message, args) {
+    execute(client, message, args) {
         message.channel.send("https://discord.gg/j5tBQx7uny") ; 
     },
 };

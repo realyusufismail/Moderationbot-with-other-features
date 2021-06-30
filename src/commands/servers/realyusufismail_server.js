@@ -1,7 +1,7 @@
 module.exports = {
-    name: 'realyusufismail_server',
+    name: 'realyusufismail server',
     description: 'github users',
-    execute(message, args) {
+    execute(client, message, args) {
         message.channel.send("https://discord.gg/kbVDCfvVKe") ;
     },
 };

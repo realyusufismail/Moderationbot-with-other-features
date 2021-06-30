@@ -2,7 +2,7 @@ module.exports = {
     name: 'ban',
     description: 'Banes the user',
     guildOnly: true,
-    execute(message, args) {
+    execute(client, message, args) {
         if (!message.member.hasPermission('BAN_MEMBERS'))
         return message.channel.send("Insufficient permissions (Requires permission `Ban members`)").then(msg => {
     msg.delete({ timeout: 30000 })
