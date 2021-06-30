@@ -20,17 +20,16 @@
   },
   "homepage": "https://github.com/realyusufismail/YusufIsmail_Discord_Bot#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.5.3",
     "anti-swear-words-packages-discord": "^1.1.43",
-    "cheerio": "*",
-    "discord-paginationembed": "^2.1.0",
     "discord.js": "^12.5.3",
-    "glob": "^7.1.7",
+    "distube": "^2.8.15",
+    "ffmpeg-static": "^4.4.0",
+    "mongoose": "^5.13.0",
+    "ms": "^2.1.2",
     "node-fetch": "^2.6.1",
-    "quick.db": "^7.1.3",
     "reaction-role": "^4.1.0",
     "simple-youtube-api": "^5.2.1",
-    "youtube": "^0.1.0",
-    "ytdl": "^1.4.1",
-    "ytdl-core": "^4.8.3"
+    "youtube": "^0.1.0"
   }
 }
