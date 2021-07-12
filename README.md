@@ -1,4 +1,5 @@
 # Yusufgamer_Bot
+This bot will soon be archived. new bot in java is being devolped.
 This bot has been updated
 
 This is a moderation discord bot which uses javascript. It has command such as ban and kick. It can also add roles and remove roles and can do much more. This can also be used as template.
